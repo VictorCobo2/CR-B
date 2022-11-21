@@ -92,6 +92,7 @@ const addPoint = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         if (exist == false) {
             const name = req.body.point_name;
+            const required_location = req.body.required_location;
             const datos = {
                 id,
                 adress: document === null || document === void 0 ? void 0 : document.adress,
@@ -101,6 +102,7 @@ const addPoint = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             const point = {
                 point_name: name,
                 qr,
+                required_location,
                 location: [],
             };
             const data = yield zone_1.zone_model.updateOne({ _id: id }, { $push: { point: point } }, { runValidators: true });

@@ -62,6 +62,7 @@ export const searchRecordZone = async (req: Request, res: Response) => {
 export const addPoint = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+
     const document = await zone_model.findOne({ _id: id });
     let exist = false;
     if (document != null) {
@@ -76,6 +77,7 @@ export const addPoint = async (req: Request, res: Response) => {
     }
     if (exist == false) {
       const name = req.body.point_name;
+      const required_location = req.body.required_location;
       const datos = {
         id,
         adress: document?.adress,
@@ -85,6 +87,7 @@ export const addPoint = async (req: Request, res: Response) => {
       const point = {
         point_name: name,
         qr,
+        required_location,
         location: [],
       };
       const data = await zone_model.updateOne({ _id: id }, { $push: { point: point } }, { runValidators: true });
@@ -168,33 +171,29 @@ export const aggLocation = async (req: Request, res: Response) => {
       longitude,
     };
     const data = await zone_model.findById({ _id: id });
-  
 
     if (data) {
       const points = data?.point;
       elementIndex = points?.findIndex((obj) => obj.point_name == point_name);
-      console.log(points[elementIndex].required_location)
-      if(points[elementIndex].required_location === true){
-
-      if (elementIndex !== -1) {
-        if (points[elementIndex].location.length >= 3) res.json({ ZM: "Ya existen las 3 ubicaciones" });
-        else {
-          points[elementIndex].location.push(datos);
-          const data2 = await zone_model.updateOne(
-            { _id: id },
-            {
-              $set: {
-                point: points,
-              },
-            }
-          );
-          res.json({ S: `${points[elementIndex].location.length}` });
+      console.log(points[elementIndex].required_location);
+      if (points[elementIndex].required_location === true) {
+        if (elementIndex !== -1) {
+          if (points[elementIndex].location.length >= 3) res.json({ ZM: "Ya existen las 3 ubicaciones" });
+          else {
+            points[elementIndex].location.push(datos);
+            const data2 = await zone_model.updateOne(
+              { _id: id },
+              {
+                $set: {
+                  point: points,
+                },
+              }
+            );
+            res.json({ S: `${points[elementIndex].location.length}` });
+          }
         }
-      }
-    } else res.json({ LZN: "Location incative" })
+      } else res.json({ LZN: "Location incative" });
     } else res.json({ AZ: "No fount zone" });
-
-
   } catch (error) {
     res.json({ A: error });
   }
