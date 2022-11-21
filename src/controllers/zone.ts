@@ -192,7 +192,7 @@ export const aggLocation = async (req: Request, res: Response) => {
             res.json({ S: `${points[elementIndex].location.length}` });
           }
         }
-      } else res.json({ LZN: "Location incative" });
+      } else res.json({ msg: "LPN", type: "info" });
     } else res.json({ AZ: "No fount zone" });
   } catch (error) {
     res.json({ A: error });

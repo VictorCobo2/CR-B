@@ -221,7 +221,7 @@ const aggLocation = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 }
             }
             else
-                res.json({ LZN: "Location incative" });
+                res.json({ msg: "LPN", type: "info" });
         }
         else
             res.json({ AZ: "No fount zone" });
