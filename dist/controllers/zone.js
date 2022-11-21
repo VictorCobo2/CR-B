@@ -199,11 +199,11 @@ const aggLocation = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             longitude,
         };
         const data = yield zone_1.zone_model.findById({ _id: id });
-        if ((data === null || data === void 0 ? void 0 : data.location) === true) {
-            if (data) {
-                const points = data === null || data === void 0 ? void 0 : data.point;
-                elementIndex = points === null || points === void 0 ? void 0 : points.findIndex((obj) => obj.point_name == point_name);
-                console.log(elementIndex);
+        if (data) {
+            const points = data === null || data === void 0 ? void 0 : data.point;
+            elementIndex = points === null || points === void 0 ? void 0 : points.findIndex((obj) => obj.point_name == point_name);
+            console.log(points[elementIndex].required_location);
+            if (points[elementIndex].required_location === true) {
                 if (elementIndex !== -1) {
                     if (points[elementIndex].location.length >= 3)
                         res.json({ ZM: "Ya existen las 3 ubicaciones" });
@@ -217,14 +217,12 @@ const aggLocation = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                         res.json({ S: `${points[elementIndex].location.length}` });
                     }
                 }
-                else {
-                }
             }
             else
-                res.json({ AZ: "No fount zone" });
+                res.json({ LZN: "Location incative" });
         }
         else
-            res.json({ LZN: "Location inactive" });
+            res.json({ AZ: "No fount zone" });
     }
     catch (error) {
         res.json({ A: error });

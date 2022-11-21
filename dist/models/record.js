@@ -93,11 +93,11 @@ function getDistanciaMetros(lat1, lon1, lat2, lon2) {
 record_schema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         const data = yield zone_1.zone_model.findById({ _id: this.zone_id });
-        if ((data === null || data === void 0 ? void 0 : data.location) === true) {
-            const points = data === null || data === void 0 ? void 0 : data.point;
-            const resultado = points === null || points === void 0 ? void 0 : points.find((poin) => poin.point_name === this.point_name);
-            let countLocation = 0;
-            let result = false;
+        const points = data === null || data === void 0 ? void 0 : data.point;
+        const resultado = points === null || points === void 0 ? void 0 : points.find((poin) => poin.point_name === this.point_name);
+        let countLocation = 0;
+        let result = false;
+        if ((resultado === null || resultado === void 0 ? void 0 : resultado.required_location) === true) {
             if ((resultado === null || resultado === void 0 ? void 0 : resultado.location.length) !== undefined) {
                 countLocation = resultado === null || resultado === void 0 ? void 0 : resultado.location.length;
             }
@@ -114,9 +114,8 @@ record_schema.pre("save", function (next) {
             else
                 next(new Error("ALN"));
         }
-        else {
+        else
             next();
-        }
     });
 });
 exports.record_model = (0, mongoose_1.model)("records", record_schema);

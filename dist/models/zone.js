@@ -47,6 +47,10 @@ const zone_schema = new mongoose_1.Schema({
                         longitude: {},
                     },
                 ],
+                required_location: {
+                    type: Boolean,
+                    default: true
+                }
             },
         ],
     },
@@ -67,9 +71,5 @@ const zone_schema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-    location: {
-        type: Boolean,
-        default: true
-    }
 }, { versionKey: false });
 exports.zone_model = (0, mongoose_1.model)("zone", zone_schema);

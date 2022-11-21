@@ -32,10 +32,9 @@ const express_1 = __importDefault(require("express"));
 const routes = __importStar(require("./routes"));
 dotenv_1.default.config();
 console.clear();
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 8080;
 const app = (0, express_1.default)();
 app.use((req, res, next) => {
-    //res.header('Access-Control-Allow-Origin', 'http://192.168.0.173:8080'); //Con este damos acceso a la api unicamente desde el dominio que se ponga.
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Authorization, x_token ,X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method");
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
@@ -43,18 +42,15 @@ app.use((req, res, next) => {
     next();
 });
 app.use(express_1.default.json());
-//URL-----------
 app.use("/api", routes.users);
 app.use("/api", routes.zone);
 app.use("/api", routes.record);
-//--------------
 app.get("/", (req, res) => {
     res.send("API funcionado en sincronia");
 });
 mongoose_1.default
-    // .connect(`${process.env.MONGODB_URI}`)
-    // .then(() => {
-    .connect(`mongodb://localhost:27017/test`).then(() => {
+    .connect(`${process.env.MONGODB_URI}`)
+    .then(() => {
     console.log("MongoDB connected");
 })
     .catch((error) => {

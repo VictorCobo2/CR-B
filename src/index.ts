@@ -5,11 +5,10 @@ import * as routes from "./routes";
 
 dotenv.config();
 console.clear();
-const port = process.env.PORT || 9000; 
+const port = process.env.PORT || 8080;
 const app = express();
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-  //res.header('Access-Control-Allow-Origin', 'http://192.168.0.173:8080'); //Con este damos acceso a la api unicamente desde el dominio que se ponga.
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -22,22 +21,17 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 app.use(express.json());
 
-//URL-----------
-
 app.use("/api", routes.users);
 app.use("/api", routes.zone);
 app.use("/api", routes.record);
-
-//--------------
 
 app.get("/", (req, res) => {
   res.send("API funcionado en sincronia");
 });
 
 mongoose
-  // .connect(`${process.env.MONGODB_URI}`)
-  // .then(() => {
-    .connect(`mongodb://localhost:27017/test`).then(() => {
+  .connect(`${process.env.MONGODB_URI}`)
+  .then(() => {
     console.log("MongoDB connected");
   })
   .catch((error) => {
