@@ -1,6 +1,6 @@
-# fly.toml file generated for monsgal-app on 2022-11-20T22:14:58-05:00
+# fly.toml file generated for mosgal-backend on 2022-11-20T22:46:02-05:00
 
-app = "monsgal-app"
+app = "mosgal-backend"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []

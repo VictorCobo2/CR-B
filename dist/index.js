@@ -32,7 +32,7 @@ const express_1 = __importDefault(require("express"));
 const routes = __importStar(require("./routes"));
 dotenv_1.default.config();
 console.clear();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || "8080";
 const app = (0, express_1.default)();
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
